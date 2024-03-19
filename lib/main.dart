@@ -1,10 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/utils/weather_service.dart';
 import 'package:weather_app/views/home_view.dart';
 import 'package:weather_app/weather_provider/weather_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => WeatherProvider(WeatherService(Dio())),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,22 +18,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => WeatherProvider(),
-        child: Consumer(builder: (context, provider, _) {
-          return MaterialApp(
-            theme: ThemeData(
-              appBarTheme: AppBarTheme(
-                backgroundColor: colorCustom(
-                    context.watch<WeatherProvider>().weather?.weatherCondition),
-              ),
-              primarySwatch: colorCustom(
-                  context.watch<WeatherProvider>().weather?.weatherCondition),
-            ),
-            debugShowCheckedModeBanner: false,
-            home: const HomeView(),
-          );
-        }));
+    // return Consumer(builder: (context, provider, _) {
+    return MaterialApp(
+      theme: ThemeData(
+        appBarTheme: AppBarTheme(
+          backgroundColor: colorCustom(
+              context.watch<WeatherProvider>().weather?.weatherCondition),
+        ),
+        primarySwatch: colorCustom(
+            context.watch<WeatherProvider>().weather?.weatherCondition),
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const HomeView(),
+    );
+    // });
   }
 }
 
