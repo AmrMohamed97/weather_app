@@ -5,7 +5,6 @@ import 'package:weather_app/weather_provider/weather_provider.dart';
 import 'package:weather_app/widgets/no_weather_body.dart';
 import 'package:weather_app/widgets/weather_info_body.dart';
 
-//home_view
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
 
